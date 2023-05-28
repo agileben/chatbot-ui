@@ -18,12 +18,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
     const userMessage = messages[messages.length - 1];
     const query = encodeURIComponent(userMessage.content.trim());
 
+    const url = `https://customsearch.googleapis.com/customsearch/v1?key=${googleAPIKey ? googleAPIKey : process.env.GOOGLE_API_KEY}&cx=${googleCSEId ? googleCSEId : process.env.GOOGLE_CSE_ID}&q=${query}&num=5`;
+    console.log('google plugin: fetching query : ', url);
     const googleRes = await fetch(
-      `https://customsearch.googleapis.com/customsearch/v1?key=${
-        googleAPIKey ? googleAPIKey : process.env.GOOGLE_API_KEY
-      }&cx=${
-        googleCSEId ? googleCSEId : process.env.GOOGLE_CSE_ID
-      }&q=${query}&num=5`,
+      url,
     );
 
     const googleData = await googleRes.json();
