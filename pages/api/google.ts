@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
     );
 
     const googleData = await googleRes.json();
-
+    console.log('Google data: ', googleData)
     const sources: GoogleSource[] = googleData.items.map((item: any) => ({
       title: item.title,
       link: item.link,
@@ -111,7 +111,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
     `;
 
     const answerMessage: Message = { role: 'user', content: answerPrompt };
-
+    console.log('Answer prompt: ', answerMessage);
     const answerRes = await fetch(`${OPENAI_API_HOST}/v1/chat/completions`, {
       headers: {
         'Content-Type': 'application/json',
@@ -135,10 +135,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
         stream: false,
       }),
     });
-
+    
     const { choices: choices2 } = await answerRes.json();
     const answer = choices2[0].message.content;
-
+    console.log('Answer: ', answer);
     res.status(200).json({ answer });
   } catch (error) {
     console.error(error);

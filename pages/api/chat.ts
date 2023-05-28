@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     encoding.free();
-
+    console.log('Sending messages with tokens: ', tokenCount);
     const stream = await OpenAIStream(model, promptToSend, temperatureToUse, key, messagesToSend);
 
     return new Response(stream);
