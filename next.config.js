@@ -5,6 +5,12 @@ const nextConfig = {
   i18n,
   reactStrictMode: true,
 
+  compiler: {
+    removeConsole: false,
+  },
+
+  productionBrowserSourceMaps: true,
+
   webpack(config, { isServer, dev }) {
     config.experiments = {
       asyncWebAssembly: true,
